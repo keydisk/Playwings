@@ -43,7 +43,7 @@ class MainViewModel: NSObject {
                     failCallBack(error.code)
                     break
                 case .unexpectedStatusCode(statusCode: let errorStatusCd, message: let errorDescription) :
-                    debugPrint("unexpectedStatusCode errorDescription : \(errorDescription)")
+                    debugPrint("unexpectedStatusCode errorDescription : \(errorStatusCd)")
                     
                     failCallBack(errorStatusCd)
                     break

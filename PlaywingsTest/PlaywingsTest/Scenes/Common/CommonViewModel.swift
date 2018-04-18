@@ -9,6 +9,12 @@
 import Foundation
 import RxSwift
 
+/// 뷰 모델에서 정의해야 하는 프로토콜
+protocol CommonViewModelProtocol {
+    
+    func setCommand(_ command: Command)
+}
+
 /// 공통으로 사용하는 뷰 모델
 class CommonViewModel {
     

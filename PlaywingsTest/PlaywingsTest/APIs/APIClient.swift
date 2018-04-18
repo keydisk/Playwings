@@ -52,15 +52,18 @@ enum APIRouter: URLRequestConvertible {
     func makeParameterWithDefault(_ parameters: Parameters?) -> Parameters {
         
         var defaultParameters = Parameters()
-
-        defaultParameters["scope"] = "basic"
+        
+        if let parameters = parameters {
+            
+            for key in parameters.keys {
+                
+                defaultParameters[key] = parameters[key]
+            }
+        }
         
         return defaultParameters
     }
-    
 }
-
-
 
 
 /// 통신 담당 클래스
@@ -85,8 +88,41 @@ class APIClient {
     public func requestJson(parameter: Parameters, completion: @escaping (APIResult<JSON>) -> Void) {
         
         self.requestJSON(APIRouter.beerList(parameter)) { (json, error) in
+
+            self.defaultApiResponseHandler(json: json, error: error, completion: completion)
+        }
+    }
+    
+    /// 통신 성공 여부 판단
+    ///
+    /// - Parameters:
+    ///   - json: 서버에서 리턴된 json
+    ///   - error: error 코드
+    ///   - completion: 콜백 메소드
+    private func defaultApiResponseHandler(json: JSON?, error: Error?, completion: @escaping (APIResult<JSON>) -> Void) {
+        
+        if let error = error {
             
+            if error._code < 0 {
+                
+                let error = error as NSError
+                completion(.failure(.unexpectedStatusCode(statusCode: error.code, message: error.description)))
+            }
+            else {
+                
+                completion(.failure(.networkError(error: error) ))
+            }
             
+            return
+        }
+        
+        if let json = json  {
+            
+            completion(.success(json))
+        }
+        else {
+            
+            completion(.failure(.unexpectedStatusCode(statusCode: 500, message: "결과값이 없습니다.")))
         }
     }
     
@@ -95,7 +131,7 @@ class APIClient {
     /// - Parameters:
     ///   - urlRequest: 통신에 필요한 request객체
     ///   - completion: 완료시 리턴하는 콜백
-    func requestJSON(_ urlRequest: URLRequestConvertible, completion: @escaping APIResultHandler) {
+    private func requestJSON(_ urlRequest: URLRequestConvertible, completion: @escaping APIResultHandler) {
         
         self.sessionManager.request(urlRequest).responseJSON { response in
             switch response.result {
@@ -114,6 +150,7 @@ class APIClient {
                     
                     debugPrint("[response] \(json)")
                 }
+                
                 completion(json, nil)
             case .failure(let error):
                 

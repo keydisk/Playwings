@@ -14,35 +14,40 @@ import SwiftyJSON
 /// MainCommand
 enum MainCommand: Command {
     
-    case loadBrewList(pageNo: Int, perPage: Int)
+    case loadBrewList(pageNo: Int?, perPage: Int)
     
     func excute() {
-        
         
     }
 }
 
 /// MainViewController
-class MainViewController: UIViewController {
+class MainViewController: BaseViewController {
 
+    //MARK: - Properties ~
     @IBOutlet weak var tableView: UITableView!
     
-    let cellIndentifier = "cell"
+    let cellIndentifier = "brewCell"
     let viewModel = MainViewMV()
+    let perPage:Int = 10
     
+    //MARK: - Methods~
     /// 음료 리스트 구독
     private func brewListSubscribe() {
         
-        self.viewModel.brewList?.subscribe({ (result) in
+        _ = self.viewModel.brewList?.subscribe({ (result) in
             
             switch result {
                 
             case .completed :
-                self.tableView.reloadData()
+                
                 break
-            case .error( _) :
+            case .error( _ ) :
                 break
             case .next( _ ) :
+                
+                self.stopIndigator()
+                self.tableView.reloadData()
                 break
             }
             
@@ -53,9 +58,14 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.viewModel.setCommand(MainCommand.loadBrewList(pageNo: 1, perPage: 10))
+        self.navigationTitle = "Brew List~"
+        self.startIndigator()
+        self.viewModel.setCommand(MainCommand.loadBrewList(pageNo: nil, perPage: self.perPage))
         
         self.brewListSubscribe()
+        
+        self.tableView.estimatedRowHeight = 150
+        self.tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     override func didReceiveMemoryWarning() {
@@ -63,6 +73,20 @@ class MainViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        let identifier = segue.identifier
+        
+        if identifier == "showDetailView" {
+            
+            if let selectIndex = sender as? NSNumber {
+                
+                let nextViewCtr = segue.destination as! DetailItemViewController
+                
+                nextViewCtr.viewModel.selectIndex = selectIndex.intValue
+            }
+        }
+    }
     
 }
 
@@ -71,17 +95,27 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-//        self.viewModel.beerList
-        return 0
+        return BrewListData.shared.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: self.cellIndentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: self.cellIndentifier, for: indexPath) as! ListCellTableViewCell
         
-        let data = self.viewModel.beerList?.elementAt(indexPath.row)
-        debugPrint(data)
+        cell.tag = indexPath.row
+        
+        if indexPath.row == BrewListData.shared.count - 1 {
+            
+            self.viewModel.setCommand(MainCommand.loadBrewList(pageNo: nil, perPage: self.perPage))
+        }
         
         return cell
     }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let selectIndex = NSNumber(value: indexPath.row)
+        self.performSegue(withIdentifier: "showDetailView", sender: selectIndex)
+    }
+    
 }

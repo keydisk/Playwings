@@ -22,13 +22,30 @@ class PlaywingsTestTests: XCTestCase {
     }
     
     /// 음료 리스트 가져오는 것을 테스트하는 메소드
-    func testGetBeerList() {
+    func testGetBrewList() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         let mainViewModel = MainViewMV()
         
         mainViewModel.loadData()
         
+        let expect = expectation(description: "get brew List")
+        
+        _ = mainViewModel.brewList?.subscribe({ result in
+            
+            switch result {
+            case .completed :
+                
+                BrewListData.shared.getName(<#T##index: Int##Int#>)
+                expect.fulfill()
+                break
+            default :
+                break
+            }
+            
+        })
+        
+        waitForExpectations(timeout: NetworkConstants.NetworkTimeout, handler: nil)
         
     }
     

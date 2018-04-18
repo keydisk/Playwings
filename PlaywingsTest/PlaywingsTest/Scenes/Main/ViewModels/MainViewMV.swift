@@ -11,7 +11,7 @@ import SwiftyJSON
 import RxSwift
 
 /// Main Business Logis
-class MainViewMV: CommonViewModel {
+class MainViewMV: CommonViewModel, CommonViewModelProtocol {
     
     deinit {
         
@@ -20,22 +20,30 @@ class MainViewMV: CommonViewModel {
     
     /// 현재 로딩한 페이지 넘버
     var currentPageNo: Int = 0
-    var brewList: BehaviorSubject<[JSON]>?
+    var brewList: BehaviorSubject<JSON>?
     
     let mainModel = MainViewModel()
     
     init(currentPageNo: Int = 0) {
         
+        let json = JSON()
+        
+        self.brewList = BehaviorSubject<JSON>(value: json)
+        
         self.currentPageNo = currentPageNo
+        
+        super.init()
+        
+        self.brewList?.disposed(by: self.disposeBag)
     }
     
     
     /// Command 설정
     ///
     /// - Parameter command: 설정할 커멘드
-    func setCommand(_ command: MainCommand) {
+    func setCommand(_ command: Command) {
         
-        switch command {
+        switch command as! MainCommand {
         case .loadBrewList(pageNo: let pageNo, perPage: let perPage):
             
             self.loadData(pageNo: pageNo, perPage: perPage)
@@ -57,22 +65,26 @@ class MainViewMV: CommonViewModel {
         }
         else {
             
-            self.currentPageNo += 1
-            localPageNo = self.currentPageNo
+            localPageNo = self.currentPageNo + 1
         }
         
         self.mainModel.loadData(pageNo: localPageNo, perPage:perPage, successCallBack: { result in
             
-            if self.brewList == nil {
+            for json in result.arrayValue {
                 
-//                self.beerList = BehaviorSubject(value: result)
+                BrewListData.shared.addData(json)
             }
             
+            if pageNo == nil {
+                
+                self.currentPageNo += 1
+            }
             
-//            Observable.from([1, 3, 5, 7, 9])
-//            self.beerList.
+            self.brewList?.onNext(result)
+            
         }, failCallBack: {errorCd in
             
+            self.brewList?.onCompleted()
         })
     }
 }
