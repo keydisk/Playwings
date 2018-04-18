@@ -17,6 +17,7 @@
 		C09C7EE32086D75400618BDB /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09C7EE22086D75400618BDB /* CustomNavigationController.swift */; };
 		C09C7EE52086E6C100618BDB /* CustomIndigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09C7EE42086E6C100618BDB /* CustomIndigator.swift */; };
 		C09C7EE82086EE2200618BDB /* BrewListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09C7EE72086EE2200618BDB /* BrewListData.swift */; };
+		C09C7EEB208745EA00618BDB /* TitleCellCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09C7EEA208745EA00618BDB /* TitleCellCell.swift */; };
 		C0A36F682085DA3E002DF728 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A36F672085DA3E002DF728 /* AppDelegate.swift */; };
 		C0A36F6A2085DA3E002DF728 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A36F692085DA3E002DF728 /* MainViewController.swift */; };
 		C0A36F6D2085DA3E002DF728 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0A36F6B2085DA3E002DF728 /* Main.storyboard */; };
@@ -68,6 +69,7 @@
 		C09C7EE22086D75400618BDB /* CustomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		C09C7EE42086E6C100618BDB /* CustomIndigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomIndigator.swift; sourceTree = "<group>"; };
 		C09C7EE72086EE2200618BDB /* BrewListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewListData.swift; sourceTree = "<group>"; };
+		C09C7EEA208745EA00618BDB /* TitleCellCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCellCell.swift; sourceTree = "<group>"; };
 		C0A36F642085DA3E002DF728 /* PlaywingsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlaywingsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0A36F672085DA3E002DF728 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0A36F692085DA3E002DF728 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 		C09C7ED52086D3BD00618BDB /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				C09C7EE920873A1C00618BDB /* SubViews */,
 				C09C7EDB2086D5CD00618BDB /* Model */,
 				C09C7ED82086D3F300618BDB /* ViewModels */,
 				C09C7ED62086D3F000618BDB /* DetailItemViewController.swift */,
@@ -170,6 +173,14 @@
 				C09C7EE72086EE2200618BDB /* BrewListData.swift */,
 			);
 			path = Datas;
+			sourceTree = "<group>";
+		};
+		C09C7EE920873A1C00618BDB /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				C09C7EEA208745EA00618BDB /* TitleCellCell.swift */,
+			);
+			path = SubViews;
 			sourceTree = "<group>";
 		};
 		C0A36F5B2085DA3E002DF728 = {
@@ -533,6 +544,7 @@
 			files = (
 				C0A36FAD2085FCDD002DF728 /* APIResult.swift in Sources */,
 				C0D728762086B9B2004DF840 /* UIColorExtension.swift in Sources */,
+				C09C7EEB208745EA00618BDB /* TitleCellCell.swift in Sources */,
 				C0A36FA32085EBA5002DF728 /* Command.swift in Sources */,
 				C09C7EE82086EE2200618BDB /* BrewListData.swift in Sources */,
 				C0A36F9A2085DB60002DF728 /* MainViewMV.swift in Sources */,

@@ -26,7 +26,15 @@ class DetailViewMV: CommonViewModel, CommonViewModelProtocol {
             
             var json = JSON()
             
-            json["description"] = "Test"
+            json["description"].string = BrewListData.shared.getDescription(self.selectIndex)
+            json["imgUrl"].string      = BrewListData.shared.getImgUrl(self.selectIndex)
+            json["description"].string = BrewListData.shared.getName(self.selectIndex)
+            json["abv"].number         = BrewListData.shared.getAbv(self.selectIndex)
+            
+            if let intgredients = BrewListData.shared.getIngredients(self.selectIndex) {
+                
+                json["ingredients"].object = intgredients
+            }
             
             self.detailItem = BehaviorSubject<JSON>(value: json)
             

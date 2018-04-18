@@ -85,44 +85,40 @@ extension DetailItemViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-//        do {
-//
-//            guard let dataSource = try self.viewModel.brewList?.value() else {
-//
-//                return 0
-//            }
-//
-//            return dataSource.count
-//        }
-//        catch _ {
-//
-//            return 0
-//        }
-        return 0
+        do {
+
+            guard let dataSource = try self.viewModel.detailItem?.value() else {
+
+                return 0
+            }
+
+            return dataSource.count
+        }
+        catch _ {
+
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: self.titleCellIdentifer, for: indexPath) as! ListCellTableViewCell
         
-//        do {
-//
-//            guard let dataSource = try self.viewModel.brewList?.value() else {
-//
-//                return cell
-//            }
-//
+        do {
+
+            guard let dataSource = try self.viewModel.detailItem?.value() else {
+                
+                return cell
+            }
+
 //            cell.cellData = dataSource[indexPath.row]
-//
-//            debugPrint("indexPath.row : \(indexPath.row)")
-//
-//            return cell
-//        }
-//        catch _ {
-//
-//            return cell
-//        }
-        
-        return cell
+            debugPrint("indexPath.row : \(indexPath.row)")
+
+            return cell
+        }
+        catch _ {
+
+            return cell
+        }
     }
 }

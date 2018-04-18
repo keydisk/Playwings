@@ -38,6 +38,28 @@ class BrewListData {
         return jsonData.string
     }
     
+    /// 숫자 데이터를 조회하는 메소드
+    ///
+    /// - Parameters:
+    ///   - index: 가져올 데이터의 인덱스
+    ///   - keyValue: 가져올 데이터의 키 목록
+    /// - Returns: 조회한 데이터
+    private func getNumberDataFromIndexAndKeyValue(_ index: Int, _ keyValue: [String]) -> NSNumber? {
+        
+        guard self.brewList.count > index else {
+            
+            return nil
+        }
+        
+        var jsonData = self.brewList[index]
+        for key in keyValue {
+            
+            jsonData = jsonData[key]
+        }
+        
+        return jsonData.number
+    }
+    
     /// 데이터 추가
     ///
     /// - Parameter data: 추가할 데이터
@@ -86,5 +108,28 @@ class BrewListData {
     public func getTip(_ index: Int) -> String? {
         
         return self.getTextDataFromIndexAndKeyValue(index, ["brewers_tips"])
+    }
+    
+    /// 음료의 알콜 도수 조회
+    ///
+    /// - Parameter index: 조회할 데이터의 인덱스
+    /// - Returns: 음료의 알콜 도수
+    public func getAbv(_ index: Int) -> NSNumber? {
+        
+        return self.getNumberDataFromIndexAndKeyValue(index, ["abv"])
+    }
+    
+    /// 음료의 구성 요소 조회
+    ///
+    /// - Parameter index: 조회할 데이터의 인덱스
+    /// - Returns: 음료의 구성 요소
+    public func getIngredients(_ index: Int) -> JSON? {
+        
+        guard self.brewList.count > index else {
+            
+            return nil
+        }
+        
+        return self.brewList[index]["ingredients"]
     }
 }
