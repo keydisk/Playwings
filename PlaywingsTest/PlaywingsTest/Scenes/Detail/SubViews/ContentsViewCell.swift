@@ -12,6 +12,10 @@ import SwiftyJSON
 /// ContentsView cell
 class ContentsViewCell: UITableViewCell {
 
+    /// 구성 요소를 표시하는 컬렉션 뷰 Type
+    ///
+    /// - Hops: 홉의 종류를 보여주는 타입
+    /// - Malts: 몰트의 종류를 보여주는 타입
     enum CollectionViewType: Int {
         
         case Hops = 0, Malts
@@ -37,7 +41,7 @@ class ContentsViewCell: UITableViewCell {
     /// HopsCell
     fileprivate let hopsIdentifier = "hopsIdentifier"
     /// MaltsCell
-    fileprivate let maltsIdentifier = "hopsIdentifier"
+    fileprivate let maltsIdentifier = "maltsIdentifier"
     
     /// contentsText
     public var contentsText = ""
