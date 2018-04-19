@@ -26,10 +26,19 @@ ChoiJuYoung</string>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playwings" translatesAutoresizingMaskIntoConstraints="NO" id="hAt-A9-OLe">
+                                <rect key="frame" x="112.5" y="137" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="9kN-hV-HUd"/>
+                                    <constraint firstAttribute="height" constant="150" id="oRO-7h-skA"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="hAt-A9-OLe" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Brs-OM-Q10"/>
                             <constraint firstItem="Xyl-ub-B5O" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="FdV-op-fOI"/>
+                            <constraint firstItem="Xyl-ub-B5O" firstAttribute="top" secondItem="hAt-A9-OLe" secondAttribute="bottom" constant="33" id="QbM-0h-guh"/>
                             <constraint firstItem="Xyl-ub-B5O" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="v1u-gF-xVG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -40,4 +49,7 @@ ChoiJuYoung</string>
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="playwings" width="249" height="250"/>
+    </resources>
 </document>

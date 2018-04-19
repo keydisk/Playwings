@@ -35,54 +35,50 @@ class ListCellTableViewCell: UITableViewCell {
             
             self._tag = newValue
             
-            self.contentsLabel.numberOfLines = 0
-            if let name = BrewListData.shared.getName(newValue) {
-                
-                self.titleLabel.text = name
-            }
-            else {
-                
-                self.titleLabel.text = ""
-            }
+            self.setCellData()
+        }
+    }
+    
+    private func setCellData() {
+        
+        self.contentsLabel.numberOfLines = 0
+        
+        if let name = BrewListData.shared.getName(self._tag) {
             
-            if let description = BrewListData.shared.getDescription(newValue) {
-                
-                self.contentsLabel.text = description
-                
-                if let brewersTips = BrewListData.shared.getTip(newValue) {
-                    
-                    let attributedString = NSMutableAttributedString(string:description );
-                    
-                    let attrebuteFirst  = [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 19.0), NSForegroundColorAttributeName : UIColor.RGBA(0x23, 0x23, 0x23)];
-                    
-                    self.contentsLabel.text?.append("\n\n tips : \(brewersTips)")
-                    attributedString.addAttributes(attrebuteFirst, range:(attributedString.string as NSString).range(of: brewersTips))
-                    
-                    self.contentsLabel.attributedText = attributedString;
-                }
-            }
-            else {
-                
-                self.contentsLabel.text = ""
-            }
+            self.titleLabel.text = name
+        }
+        else {
             
-            if let imgUrlText = BrewListData.shared.getImgUrl(newValue) {
+            self.titleLabel.text = ""
+        }
+        
+        self.contentsLabel.text = ""
+        
+        if let description = BrewListData.shared.getDescription(self._tag) {
+            
+            self.contentsLabel.text = description
+            
+            if let brewersTips = BrewListData.shared.getTip(self._tag) {
                 
-                self.introBrewImg.loadingImgFromUrl(imgUrlText, {() in
-                    
-                    if let tmpImg = self.introBrewImg.image {
-                        
-                        let oringRate   = tmpImg.size.width / tmpImg.size.height
-                        
-                        self.introBrewImg.image = self.introBrewImg.image?.resizedImage(CGSize(width: self.introBrewImg.frame.size.width, height: self.introBrewImg.frame.size.width / oringRate))
-                    }
-                })
-            }
-            else {
+                self.contentsLabel.text?.append("\n\n tips : \(brewersTips)")
                 
-                self.introBrewImg.image = nil
+                let attributedString = NSMutableAttributedString(string:self.contentsLabel.text! );
+                
+                
+                let attrebuteFirst  = [NSFontAttributeName:UIFont.italicSystemFont(ofSize: 12), NSForegroundColorAttributeName : UIColor.RGBA(0x23, 0x23, 0x23)];
+                
+                attributedString.addAttributes(attrebuteFirst, range:(attributedString.string as NSString).range(of: brewersTips))
+                
+                self.contentsLabel.attributedText = attributedString;
             }
         }
+        
+        self.introBrewImg.image = nil
+    }
+    
+    override func willMove(toSuperview newSuperview: UIView?) {
+        super.willMove(toSuperview: newSuperview)
+        
     }
     
     override func awakeFromNib() {
@@ -97,8 +93,23 @@ class ListCellTableViewCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
-        
         super.layoutSubviews()
+        
+        if let imgUrlText = BrewListData.shared.getImgUrl(self._tag) {
+            
+            self.introBrewImg.loadingImgFromUrl(imgUrlText, { cacheType in
+                if let img = self.introBrewImg.image {
+                    
+                    let rate = img.size.width / img.size.height
+                    let size = CGSize(width: img.size.width,
+                                      height: img.size.width / rate)
+                    self.introBrewImg.image = img.resizedImage(size)
+                }
+            })
+        }
+        else {
+            
+            self.introBrewImg.image = nil
+        }
     }
-    
 }
