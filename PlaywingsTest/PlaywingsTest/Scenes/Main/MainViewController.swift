@@ -65,12 +65,13 @@ class MainViewController: BaseViewController {
         
         self.navigationTitle = "Brew List~"
         self.startIndigator()
-        self.viewModel.setCommand(MainCommand.loadBrewList(pageNo: nil, perPage: self.perPage))
-        
-        self.brewListSubscribe()
         
         self.tableView.estimatedRowHeight = 150
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        
+        self.viewModel.setCommand(MainCommand.loadBrewList(pageNo: nil, perPage: self.perPage))
+        
+        self.brewListSubscribe()
     }
     
     override func didReceiveMemoryWarning() {

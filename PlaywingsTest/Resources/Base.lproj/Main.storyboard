@@ -30,7 +30,7 @@
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="PlaywingsTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="MainViewController" customModule="PlaywingsTest" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -105,7 +105,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="INZ-Ac-uFf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="POu-NW-KIZ"/>
+                            <constraint firstItem="INZ-Ac-uFf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="64" id="POu-NW-KIZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="INZ-Ac-uFf" secondAttribute="trailing" id="QJG-AP-6T7"/>
                             <constraint firstItem="INZ-Ac-uFf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="SaP-RK-9R8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="INZ-Ac-uFf" secondAttribute="bottom" id="oR0-1b-cvj"/>
@@ -113,6 +113,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="u9l-vI-aFG"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="tableView" destination="INZ-Ac-uFf" id="hRb-8t-dLE"/>
                         <segue destination="2RG-xT-NoO" kind="show" identifier="showDetailView" id="y72-NA-w4e"/>
@@ -125,7 +126,7 @@
         <!--Detail Item View Controller-->
         <scene sceneID="Iyg-9w-clw">
             <objects>
-                <viewController id="2RG-xT-NoO" customClass="DetailItemViewController" customModule="PlaywingsTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="2RG-xT-NoO" customClass="DetailItemViewController" customModule="PlaywingsTest" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fhg-EA-06d">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -148,6 +149,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0dg-qH-72t"/>
                     </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="tableView" destination="eyX-ih-RBG" id="912-PY-Ckx"/>
                     </connections>
