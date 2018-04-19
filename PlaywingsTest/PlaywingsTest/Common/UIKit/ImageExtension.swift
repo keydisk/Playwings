@@ -12,7 +12,7 @@ import UIKit
 /** comment : UIImage에서 추가적인 작업을 위한 익스텐션 */
 extension UIImage
 {
-    public func resizedImage(_ inRect:CGSize, opaque:Bool = false) -> UIImage
+    public func resizedImage(_ inRect:CGSize, opaque:Bool = false) -> UIImage?
     {
         let scale = UIScreen.main.scale;
         
@@ -20,24 +20,24 @@ extension UIImage
         
         if opaque == false {
             
-            UIGraphicsGetCurrentContext()!.interpolationQuality = .none
+            UIGraphicsGetCurrentContext()?.interpolationQuality = .none
         }
         
         //        CGContext.interpolationQuality =
         
         self.draw(in: CGRect(x:0, y:0, width:inRect.width, height:inRect.height));
-        let newImg = UIGraphicsGetImageFromCurrentImageContext()!;
+        let newImg = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
         return newImg;
     }
     
     /** comment : 이미지 스트레처블 */
-    public func stretchableImg(width:CGFloat, height:CGFloat) -> UIImage
+    public func stretchableImg(width:CGFloat, height:CGFloat) -> UIImage?
     {
         var rtnImg = self.resizedImage(CGSize(width:width, height:height));
         //        pRtnImg = pRtnImg.stretchableImage(withLeftCapWidth: Int(fWidth / 2), topCapHeight: Int(fHeight / 2))
-        rtnImg = rtnImg.resizableImage(withCapInsets: UIEdgeInsets(top: (height / 2) - 1, left: (width / 2) - 1, bottom: (height / 2), right: (width / 2) ), resizingMode: .stretch)
+        rtnImg = rtnImg?.resizableImage(withCapInsets: UIEdgeInsets(top: (height / 2) - 1, left: (width / 2) - 1, bottom: (height / 2), right: (width / 2) ), resizingMode: .stretch)
         
         return rtnImg;
     }

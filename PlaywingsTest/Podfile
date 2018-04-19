@@ -8,4 +8,17 @@ pod 'Kingfisher', '~> 3.11.0'
 pod 'ObjectMapper', '~> 2.2.8'
 pod 'RxSwift'
 
-target 'PlaywingsTest'
+
+target 'PlaywingsTest' do
+    
+    pod 'SwiftyJSON', '~> 3.1.4'
+    pod 'Alamofire', '~> 4.4'
+    pod 'Kingfisher', '~> 3.11.0'
+    pod 'ObjectMapper', '~> 2.2.8'
+    pod 'RxSwift'
+    
+    target 'PlaywingsTestTests' do
+        inherit! :search_paths
+    end
+end
+

@@ -14,7 +14,12 @@ class BrewListData {
     
     static let shared: BrewListData = BrewListData()
     
+    #if DEBUG
+    public var brewList: [JSON] = []
+    #else
     private var brewList: [JSON] = []
+    #endif
+    
     
     /// 텍스트 데이터를 조회하는 메소드
     ///

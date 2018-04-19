@@ -7,6 +7,9 @@
 //
 
 import XCTest
+import SwiftyJSON
+import RxSwift
+
 @testable import PlaywingsTest
 
 class PlaywingsTestTests: XCTestCase {
@@ -26,26 +29,72 @@ class PlaywingsTestTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         let mainViewModel = MainViewMV()
-        
-        mainViewModel.loadData()
+
+        mainViewModel.setCommand(MainCommand.loadBrewList(pageNo: nil, perPage: 10))
+        let intervalCount: TimeInterval = 3
         
         let expect = expectation(description: "get brew List")
         
         _ = mainViewModel.brewList?.subscribe({ result in
-            
+
             switch result {
+            case .next( _ ) :
+
+                for i in 0..<BrewListData.shared.count {
+
+                    XCTAssertNotNil(BrewListData.shared.getName(i), "Name 에러")
+                    XCTAssertNotNil(BrewListData.shared.getDescription(i), "Description 에러")
+                    XCTAssertNotNil(BrewListData.shared.getImgUrl(i), "image url 에러")
+                    XCTAssertNotNil(BrewListData.shared.getTip(i), "tip 에러")
+
+                    if  let intredients = BrewListData.shared.getIngredients(i),
+                        let malts = intredients["malt"].array,
+                        let hops  = intredients["hops"].array {
+
+                        for malt in malts {
+
+                            XCTAssertNotNil(malt["name"].string, "malt Name 에러")
+                            XCTAssertNotNil(malt["amount"]["value"].number, "malt Amount value 에러")
+                            XCTAssertNotNil(malt["amount"]["unit"].string, "malt Amount unit 에러")
+                        }
+
+                        for hop in hops {
+
+                            XCTAssertNotNil(hop["amount"]["value"].number, "hop amount의 value 에러")
+                            XCTAssertNotNil(hop["amount"]["unit"].string, "hop amount의 unit  에러")
+                        }
+                    }
+                    else {
+
+                        XCTAssert(false, "구성 요소 에러")
+                    }
+
+                    XCTAssertNotNil(BrewListData.shared.getAbv(i), "Abv 에러")
+                }
+
+                if Int(intervalCount * 10) == BrewListData.shared.count {
+
+                    expect.fulfill()
+                }
+                else {
+
+                    mainViewModel.setCommand(MainCommand.loadBrewList(pageNo: nil, perPage: 10))
+                }
+
+                break
+
             case .completed :
-                
-                BrewListData.shared.getName(<#T##index: Int##Int#>)
-                expect.fulfill()
+                break
+            case .error(let error as NSError) :
+
+                XCTAssertNotNil(nil, "error code : \(error.code)")
                 break
             default :
                 break
             }
-            
         })
         
-        waitForExpectations(timeout: NetworkConstants.NetworkTimeout, handler: nil)
+        waitForExpectations(timeout: NetworkConstants.NetworkTimeout * intervalCount, handler: nil)
         
     }
     

@@ -56,7 +56,7 @@ class MainViewMV: CommonViewModel, CommonViewModelProtocol {
     /// - Parameters:
     ///   - pageNo: 로딩할 페이지
     ///   - perPage: 페이지당 호출할 데이터 개수
-    func loadData(pageNo: Int? = nil, perPage: Int = 10) {
+    private func loadData(pageNo: Int? = nil, perPage: Int = 10) {
         
         var localPageNo: Int = 0
         if pageNo != nil {
@@ -84,7 +84,8 @@ class MainViewMV: CommonViewModel, CommonViewModelProtocol {
             
         }, failCallBack: {errorCd in
             
-            self.brewList?.onCompleted()
+            let error = NSError()
+            self.brewList?.onError(error)
         })
     }
 }

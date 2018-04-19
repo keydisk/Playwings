@@ -37,17 +37,20 @@ class MainViewController: BaseViewController {
         
         _ = self.viewModel.brewList?.subscribe({ (result) in
             
-            switch result {
-                
+            switch result {    
             case .completed :
-                
                 break
             case .error( _ ) :
-                break
-            case .next( _ ) :
-                
                 self.stopIndigator()
-                self.tableView.reloadData()
+                break
+            case .next( let element ) :
+                
+                if element.count > 0 {
+                    
+                    self.stopIndigator()
+                    self.tableView.reloadData()
+                }
+                
                 break
             }
             
@@ -98,16 +101,26 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         return BrewListData.shared.count
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return 150
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: self.cellIndentifier, for: indexPath) as! ListCellTableViewCell
         
         cell.tag = indexPath.row
         
+        cell.selectionStyle = .none
+        cell.contentView.backgroundColor = indexPath.row % 2 == 0 ? UIColor.RGBA(240, 240, 240) : UIColor.white
+        
         if indexPath.row == BrewListData.shared.count - 1 {
             
             self.viewModel.setCommand(MainCommand.loadBrewList(pageNo: nil, perPage: self.perPage))
         }
+        
+        debugPrint("indexPath.row : \(indexPath.row)")
         
         return cell
     }
