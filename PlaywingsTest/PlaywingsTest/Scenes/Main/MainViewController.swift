@@ -40,8 +40,10 @@ class MainViewController: BaseViewController {
             switch result {    
             case .completed :
                 break
-            case .error( _ ) :
+            case .error( let error as NSError ) :
                 self.stopIndigator()
+                
+                CustomToastMessage.GetInstance().ShowMessage("error code : \(error.code)")
                 break
             case .next( let element ) :
                 
