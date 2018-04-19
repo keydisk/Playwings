@@ -83,7 +83,6 @@ class ContentsViewCell: UITableViewCell {
             
             self.contentsLabel = contentsLabel
             
-            
             let abvLabel = UILabel()
             
             abvLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -148,7 +147,7 @@ class ContentsViewCell: UITableViewCell {
             
             self.contentView.addConstraints([xLoc, topLoc, width, height])
             
-            maltsList.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: self.hopsIdentifier)
+            maltsList.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: self.maltsIdentifier)
             
             maltsList.backgroundColor = UIColor.white
             self.maltsList = maltsList
@@ -191,7 +190,7 @@ class ContentsViewCell: UITableViewCell {
 
             self.contentView.addConstraints([xLoc, topLoc, width, height, bottom])
             
-            hopsList.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: self.maltsIdentifier)
+            hopsList.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: self.hopsIdentifier)
             self.hopsList = hopsList
         }
     }

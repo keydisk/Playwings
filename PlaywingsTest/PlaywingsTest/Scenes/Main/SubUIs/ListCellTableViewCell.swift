@@ -34,13 +34,15 @@ class ListCellTableViewCell: UITableViewCell {
         set {
             
             self._tag = newValue
+            
+            self.setCellData()
         }
     }
     
-    override func willMove(toSuperview newSuperview: UIView?) {
-        super.willMove(toSuperview: newSuperview)
+    private func setCellData() {
         
         self.contentsLabel.numberOfLines = 0
+        
         if let name = BrewListData.shared.getName(self._tag) {
             
             self.titleLabel.text = name
@@ -74,6 +76,11 @@ class ListCellTableViewCell: UITableViewCell {
         self.introBrewImg.image = nil
     }
     
+    override func willMove(toSuperview newSuperview: UIView?) {
+        super.willMove(toSuperview: newSuperview)
+        
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -91,7 +98,13 @@ class ListCellTableViewCell: UITableViewCell {
         if let imgUrlText = BrewListData.shared.getImgUrl(self._tag) {
             
             self.introBrewImg.loadingImgFromUrl(imgUrlText, { cacheType in
-                
+                if let img = self.introBrewImg.image {
+                    
+                    let rate = img.size.width / img.size.height
+                    let size = CGSize(width: img.size.width,
+                                      height: img.size.width / rate)
+                    self.introBrewImg.image = img.resizedImage(size)
+                }
             })
         }
         else {

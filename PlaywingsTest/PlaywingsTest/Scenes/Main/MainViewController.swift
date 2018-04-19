@@ -122,8 +122,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             self.viewModel.setCommand(MainCommand.loadBrewList(pageNo: nil, perPage: self.perPage))
         }
         
-        debugPrint("indexPath.row : \(indexPath.row)")
-        
         return cell
     }
     
